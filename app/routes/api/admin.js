@@ -54,8 +54,8 @@ router.get('/windows', (req, res) => {
 
 
 
-// [Admin] Remove all of the sessions.
-router.delete('/', (req, res) => {
+// [Admin] Remove all of the sessions. We'll make this a bit confusing (TODO: properly implement)
+router.delete('/admin/delete', (req, res) => {
 
 sessionUtils.deleteAllSessions().then(sessionList => {
     if (!sessionList){

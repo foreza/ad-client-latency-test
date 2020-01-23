@@ -110,6 +110,23 @@ function getListOfAllValidWindowsSessions() {
 
 }
 
+function admin_delete_all_data() {
+    $.ajax({
+        url: '/api/admin/admin/delete',
+        dataType: 'json',
+        type: 'delete',
+        contentType: 'application/json',
+        processData: false,
+        success: function (data, textStatus, jQxhr) {
+            console.log(data);
+            // Don't wipe the dom.
+        },
+        error: function (jqXhr, textStatus, errorThrown) { console.log(errorThrown); }
+    });
+
+
+}
+
 function util_formatSessionData(data) {
 
     var htmlReturn = "";
@@ -147,5 +164,28 @@ function util_validateUidInput(input) {
     } 
 
     return false;
+
+}
+
+
+function util_formatSessionData(data) {
+
+    var htmlReturn = "";
+
+    for (var i = 0; i < data.length; ++i) {
+
+        htmlReturn += "<tr>"
+            + "<td class='time_elapsed'>" + data[i].request_totalTimeElapsed + "</td>"
+            + "<td class='device_name'>" + data[i].device_name + "</td>"
+            + "<td class='device_ip'>" + data[i].device_ip + "</td>"
+            + "<td class='device_platform'>" + data[i].device_platform + "</td>"
+            + "<td class='request_geo'>" + data[i].ad_request_geo + "</td>"
+            + "<td class='delivery_status'>" + data[i].ad_delivery_status + "</td>"
+            + "<td class='auto_uid'>" + data[i]._id + "</td>"
+            + "</tr>";
+
+    }
+
+    return htmlReturn;
 
 }
