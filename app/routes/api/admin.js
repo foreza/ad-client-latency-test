@@ -16,6 +16,43 @@ router.get('/', (req, res) => {
 });
 
 
+router.get('/ios', (req, res) => {
+
+    sessionUtils.listAllValidSessionsForiOS().then(sessionList => {
+        if (!sessionList){
+            return res.sendStatus(400);
+        } else {
+            return res.send(sessionList);
+        }
+    });
+    
+});
+
+router.get('/android', (req, res) => {
+
+    sessionUtils.listAllValidSessionsForAndroid().then(sessionList => {
+        if (!sessionList){
+            return res.sendStatus(400);
+        } else {
+            return res.send(sessionList);
+        }
+    });
+    
+});
+
+router.get('/windows', (req, res) => {
+
+    sessionUtils.listAllValidSessionsForWindows().then(sessionList => {
+        if (!sessionList){
+            return res.sendStatus(400);
+        } else {
+            return res.send(sessionList);
+        }
+    });
+    
+});
+
+
 
 // [Admin] Remove all of the sessions.
 router.delete('/', (req, res) => {

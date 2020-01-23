@@ -8,7 +8,7 @@ $(document).ready(function () {
     });
 
     // Get the current list of sessions
-    // getListOfAllSessions(); 
+    getListOfAllSessions(); 
 
 });
 
@@ -27,12 +27,12 @@ function createTestSession() {
         type: 'post',
         contentType: 'application/json',
         data: JSON.stringify ({
-            "request_totalTimeElapsed" : "5.0",
-			"device_name": "ME",
-			"device_ip": "127.0.0.1",
-			"device_platform": "AYE",
-			"ad_request_geo": "HiveMind",
-			"ad_delivery_status": false
+            "request_totalTimeElapsed" : "10.0",
+			"device_name": "MERRRS",
+			"device_ip": "127.1.1.1",
+			"device_platform": "Windows",
+			"ad_request_geo": "HivuMind",
+			"ad_delivery_status": true
         }),
         processData: false,
         success: function (data, textStatus, jQxhr) {
@@ -42,25 +42,10 @@ function createTestSession() {
         }
     });
 
-    // $.ajax({
-    //     url: '/api/session/test',
-    //     dataType: 'json',
-    //     type: 'post',
-    //     contentType: 'application/json',
-    //     data: JSON.stringify ({
-    //     }),
-    //     processData: false,
-    //     success: function (data, textStatus, jQxhr) {
-    //         console.log("Session created!") },
-    //     error: function (jqXhr, textStatus, errorThrown) { 
-    //         console.log(errorThrown); 
-    //     }
-    // });
-
 }
 
 
-// GET a list of all sessions from the distort service
+// GET a list of all sessions from the  service
 function getListOfAllSessions() {
     $.ajax({
         url: '/api/admin/',
@@ -76,16 +61,58 @@ function getListOfAllSessions() {
     });
 }
 
+
+function getListOfAllValidiOSSessions() {
+    $.ajax({
+        url: '/api/admin/ios',
+        dataType: 'json',
+        type: 'get',
+        contentType: 'application/json',
+        processData: false,
+        success: function (data, textStatus, jQxhr) {
+            console.log(data);
+            $("#sessionList").html(util_formatSessionData(data));
+        },
+        error: function (jqXhr, textStatus, errorThrown) { console.log(errorThrown); }
+    });
+}
+
+function getListOfAllValidAndroidSessions() {
+    $.ajax({
+        url: '/api/admin/android',
+        dataType: 'json',
+        type: 'get',
+        contentType: 'application/json',
+        processData: false,
+        success: function (data, textStatus, jQxhr) {
+            console.log(data);
+            $("#sessionList").html(util_formatSessionData(data));
+        },
+        error: function (jqXhr, textStatus, errorThrown) { console.log(errorThrown); }
+    });
+
+}
+
+function getListOfAllValidWindowsSessions() {
+        $.ajax({
+            url: '/api/admin/windows',
+            dataType: 'json',
+            type: 'get',
+            contentType: 'application/json',
+            processData: false,
+            success: function (data, textStatus, jQxhr) {
+                console.log(data);
+                $("#sessionList").html(util_formatSessionData(data));
+            },
+            error: function (jqXhr, textStatus, errorThrown) { console.log(errorThrown); }
+        });
+
+
+}
+
 function util_formatSessionData(data) {
 
     var htmlReturn = "";
-
-    // request_totalTimeElapsed : "5.0",
-	// 		device_name: "ME",
-	// 		device_ip: "127.0.0.1",
-	// 		device_platform: "AYE",
-	// 		ad_request_geo: "HiveMind",
-	// 		ad_delivery_status: false,
 
     for (var i = 0; i < data.length; ++i) {
 
