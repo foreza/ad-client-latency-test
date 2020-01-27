@@ -27,12 +27,15 @@ function createTestSession() {
         type: 'post',
         contentType: 'application/json',
         data: JSON.stringify ({
+            "request_startTime" : "99.023",
+            "request_endTime" : "100.012",
             "request_totalTimeElapsed" : "10.0",
 			"device_name": "MERRRS",
-			"device_ip": "127.1.1.1",
+            "device_ip": "127.1.1.1",
+            "ad_request_placement": "380000",
 			"device_platform": "Windows",
 			"ad_request_geo": "HivuMind",
-			"ad_delivery_status": true
+			"ad_delivery_status": false
         }),
         processData: false,
         success: function (data, textStatus, jQxhr) {
@@ -175,12 +178,15 @@ function util_formatSessionData(data) {
     for (var i = 0; i < data.length; ++i) {
 
         htmlReturn += "<tr>"
+        + "<td class='request_startTime'>" + data[i].request_startTime + "</td>"
+        + "<td class='request_endTime'>" + data[i].request_endTime + "</td>"
             + "<td class='time_elapsed'>" + data[i].request_totalTimeElapsed + "</td>"
             + "<td class='device_name'>" + data[i].device_name + "</td>"
             + "<td class='device_ip'>" + data[i].device_ip + "</td>"
             + "<td class='device_platform'>" + data[i].device_platform + "</td>"
-            + "<td class='request_geo'>" + data[i].ad_request_geo + "</td>"
-            + "<td class='delivery_status'>" + data[i].ad_delivery_status + "</td>"
+            + "<td class='ad_request_placement'>" + data[i].ad_request_placement + "</td>"
+            + "<td class='ad_request_geo'>" + data[i].ad_request_geo + "</td>"
+            + "<td class='ad_delivery_status'>" + data[i].ad_delivery_status + "</td>"
             + "<td class='auto_uid'>" + data[i]._id + "</td>"
             + "</tr>";
 

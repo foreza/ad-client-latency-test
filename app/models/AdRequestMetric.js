@@ -15,6 +15,14 @@ meta -
 
 
 var AdRequestMetricSchema = new Schema({
+    request_startTime: {
+        type: String,           // TODO: Find a better way to do this.       
+        require: true
+    },
+    request_endTime: {
+        type: String,           // TODO: Find a better way to do this.       
+        require: true
+    },
     request_totalTimeElapsed: {
         type: String,           // TODO: Find a better way to do this.       
         require: true
@@ -30,6 +38,10 @@ var AdRequestMetricSchema = new Schema({
     device_platform: {
         type: String,
         require: true
+    },
+    ad_request_placement: {
+        type: String,
+        require: false,
     },
     ad_request_geo: {
         type: String,
