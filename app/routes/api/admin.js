@@ -16,42 +16,46 @@ router.get('/', (req, res) => {
 });
 
 
-router.get('/ios', (req, res) => {
+router.get('/metrics/:platform', (req, res, next) => {
 
-    sessionUtils.listAllValidSessionsForiOS().then(sessionList => {
-        if (!sessionList){
-            return res.sendStatus(400);
-        } else {
-            return res.send(sessionList);
-        }
-    });
+    let platform = req.params.platform;
+
+    console.log(`Platform is: ${req.params.platform}`)
+
+    if (platform != null) {
+       platform = platform.toLowerCase(); 
+    } 
     
+    switch (platform) {
+
+        case "ios":
+            res.locals.query = sessionUtils.listAllValidSessionsForiOS;
+            break;
+        case "android":
+            res.locals.query = sessionUtils.listAllValidSessionsForAndroid;
+            break;
+        case "windows":
+            res.locals.query = sessionUtils.listAllValidSessionsForWindows;
+            break;
+        default:
+            res.locals.query = {};
+            break;
+    }
+
+    next();
+
+}, (req, res, next) => {
+    console.log(`Reached next with ${res.locals.query}`);
+
+        res.locals.query().then(sessionList => {
+            if (!sessionList){
+                return res.sendStatus(400);
+            } else {
+                return res.send(sessionList);
+            }
+       
+    })
 });
-
-router.get('/android', (req, res) => {
-
-    sessionUtils.listAllValidSessionsForAndroid().then(sessionList => {
-        if (!sessionList){
-            return res.sendStatus(400);
-        } else {
-            return res.send(sessionList);
-        }
-    });
-    
-});
-
-router.get('/windows', (req, res) => {
-
-    sessionUtils.listAllValidSessionsForWindows().then(sessionList => {
-        if (!sessionList){
-            return res.sendStatus(400);
-        } else {
-            return res.send(sessionList);
-        }
-    });
-    
-});
-
 
 
 // [Admin] Remove all of the sessions. We'll make this a bit confusing (TODO: properly implement)

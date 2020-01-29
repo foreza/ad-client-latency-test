@@ -20,7 +20,6 @@ sessionMetricUtils.listAllSessions = () => {
           reject(err);
         }
         resolve(sessionList);
-  
       });
   
   });
@@ -53,6 +52,7 @@ sessionMetricUtils.listAllValidSessionsForWindows = () => {
       if (err){
         reject(err);
       }
+      console.log(typeof(sessionList));
       resolve(sessionList);
 
     });

@@ -31,11 +31,11 @@ function createTestSession() {
             "request_endTime" : "100.012",
             "request_totalTimeElapsed" : "10.0",
 			"device_name": "MERRRS",
-            "device_ip": "127.1.1.1",
-            "ad_request_placement": "380000",
-			"device_platform": "Windows",
+            "device_ip": "127.1.1.2",
+            "ad_request_placement": "32380000",
+			"device_platform": "iOS",
 			"ad_request_geo": "HivuMind",
-			"ad_delivery_status": false
+			"ad_delivery_status": true
         }),
         processData: false,
         success: function (data, textStatus, jQxhr) {
@@ -47,6 +47,21 @@ function createTestSession() {
 
 }
 
+
+function getListOfSessionsForPlatform(platform) {
+    $.ajax({
+        url: `/api/admin/metrics/${platform}`,
+        dataType: 'json',
+        type: 'get',
+        contentType: 'application/json',
+        processData: false,
+        success: function (data, textStatus, jQxhr) {
+            console.log(data);
+            $("#sessionList").html(util_formatSessionData(data));
+        },
+        error: function (jqXhr, textStatus, errorThrown) { console.log(errorThrown); }
+    });
+}
 
 // GET a list of all sessions from the  service
 function getListOfAllSessions() {
