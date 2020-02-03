@@ -12,8 +12,10 @@ sessionMetricUtils.createSession = newSession => {
 }
 
 
+
 // [Admin] This utility lists all known distort sessions in the DB
-sessionMetricUtils.listAllSessions = () => {
+sessionMetricUtils.listAllSessionsNoLimit = () => {
+
     return new Promise((resolve, reject) => {
       adRequestMetricModel.find({}, function(err, sessionList) {
         if (err){
@@ -21,6 +23,26 @@ sessionMetricUtils.listAllSessions = () => {
         }
         resolve(sessionList);
       });
+  
+  });
+  };
+
+
+
+// [Admin] This utility lists all known distort sessions in the DB
+sessionMetricUtils.listAllSessionsWithMaxNumber = (num) => {
+
+  if (typeof(num) != 'number') {
+    num = 50;   // Default the limit to 50 records if none is provided
+  }
+
+    return new Promise((resolve, reject) => {
+      adRequestMetricModel.find({}, function(err, sessionList) {
+        if (err){
+          reject(err);
+        }
+        resolve(sessionList);
+      }).sort({'date': -1}).limit(num);
   
   });
   };
@@ -52,7 +74,6 @@ sessionMetricUtils.listAllValidSessionsForWindows = () => {
       if (err){
         reject(err);
       }
-      console.log(typeof(sessionList));
       resolve(sessionList);
 
     });

@@ -2,7 +2,7 @@
 const router = require('express').Router();
 
 
-const sessions = require('./public');            // For public sessions, use the distort-public path
+const sessions = require('./session');            // For the restful sessions API
 const sessionView = require('./admin');         // For administrative / testing, use distort-admin path
 
 router.use('/session', sessions);

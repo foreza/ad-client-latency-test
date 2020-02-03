@@ -47,10 +47,10 @@ function createTestSession() {
 
 }
 
-
+// Get a filtered list of sessions by the provided platform
 function getListOfSessionsForPlatform(platform) {
     $.ajax({
-        url: `/api/admin/metrics/${platform}`,
+        url: `/api/admin/reporting/${platform}`,
         dataType: 'json',
         type: 'get',
         contentType: 'application/json',
@@ -63,10 +63,11 @@ function getListOfSessionsForPlatform(platform) {
     });
 }
 
-// GET a list of all sessions from the  service
+
+// GET a list of all sessions from the service
 function getListOfAllSessions() {
     $.ajax({
-        url: '/api/admin/',
+        url: '/api/session/',
         dataType: 'json',
         type: 'get',
         contentType: 'application/json',
@@ -82,7 +83,7 @@ function getListOfAllSessions() {
 
 function deleteSessionByUID(uid) {
     $.ajax({
-        url: `/api/admin/${uid}`,
+        url: `/api/session/${uid}`,
         dataType: 'json',
         type: 'delete',
         contentType: 'application/json',

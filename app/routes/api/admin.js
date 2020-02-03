@@ -2,26 +2,12 @@ const router = require('express').Router();
 const sessionUtils = require('../../utilities/utils_session');
 
 
-// [Admin] Get all of the sessions.
-router.get('/', (req, res) => {
-
-    sessionUtils.listAllSessions().then(sessionList => {
-        if (!sessionList) {
-            return res.sendStatus(400);
-        } else {
-            return res.send(sessionList);
-        }
-    });
-
-});
 
 // [REPORTING:] Get all reporting for the specific platform and placement mentioned
-router.get('/metrics/:platform', (req, res, next) => {
+router.get('/reporting/:platform', (req, res, next) => {
 
     let platform = req.params.platform;
-
-    console.log(`Platform is: ${req.params.platform}`)
-
+    
     if (platform != null) {
         platform = platform.toLowerCase();
     }
@@ -56,19 +42,6 @@ router.get('/metrics/:platform', (req, res, next) => {
     })
 });
 
-
-router.delete('/:id', (req, res, next) => {
-
-    sessionUtils.deleteSessionGivenUID(req.params.id).then(emptiness => {
-        if (!emptiness) {
-            return res.sendStatus(400);
-        } else {
-            return res.send(emptiness);
-        }
-    });
-
-
-})
 
 
 // [Admin] Remove all of the sessions.
