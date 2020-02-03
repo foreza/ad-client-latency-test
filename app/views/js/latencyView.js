@@ -80,50 +80,19 @@ function getListOfAllSessions() {
 }
 
 
-function getListOfAllValidiOSSessions() {
+function deleteSessionByUID(uid) {
     $.ajax({
-        url: '/api/admin/ios',
+        url: `/api/admin/${uid}`,
         dataType: 'json',
-        type: 'get',
+        type: 'delete',
         contentType: 'application/json',
         processData: false,
         success: function (data, textStatus, jQxhr) {
             console.log(data);
-            $("#sessionList").html(util_formatSessionData(data));
+            $(`#${uid}`).remove();
         },
         error: function (jqXhr, textStatus, errorThrown) { console.log(errorThrown); }
     });
-}
-
-function getListOfAllValidAndroidSessions() {
-    $.ajax({
-        url: '/api/admin/android',
-        dataType: 'json',
-        type: 'get',
-        contentType: 'application/json',
-        processData: false,
-        success: function (data, textStatus, jQxhr) {
-            console.log(data);
-            $("#sessionList").html(util_formatSessionData(data));
-        },
-        error: function (jqXhr, textStatus, errorThrown) { console.log(errorThrown); }
-    });
-
-}
-
-function getListOfAllValidWindowsSessions() {
-        $.ajax({
-            url: '/api/admin/windows',
-            dataType: 'json',
-            type: 'get',
-            contentType: 'application/json',
-            processData: false,
-            success: function (data, textStatus, jQxhr) {
-                console.log(data);
-                $("#sessionList").html(util_formatSessionData(data));
-            },
-            error: function (jqXhr, textStatus, errorThrown) { console.log(errorThrown); }
-        });
 
 
 }
@@ -142,30 +111,8 @@ function admin_delete_all_data() {
         error: function (jqXhr, textStatus, errorThrown) { console.log(errorThrown); }
     });
 
-
 }
 
-function util_formatSessionData(data) {
-
-    var htmlReturn = "";
-
-    for (var i = 0; i < data.length; ++i) {
-
-        htmlReturn += "<tr>"
-            + "<td class='time_elapsed'>" + data[i].request_totalTimeElapsed + "</td>"
-            + "<td class='device_name'>" + data[i].device_name + "</td>"
-            + "<td class='device_ip'>" + data[i].device_ip + "</td>"
-            + "<td class='device_platform'>" + data[i].device_platform + "</td>"
-            + "<td class='request_geo'>" + data[i].ad_request_geo + "</td>"
-            + "<td class='delivery_status'>" + data[i].ad_delivery_status + "</td>"
-            + "<td class='auto_uid'>" + data[i]._id + "</td>"
-            + "</tr>";
-
-    }
-
-    return htmlReturn;
-
-}
 
 // Utility function to perform some basic input validation
 /*
@@ -192,7 +139,7 @@ function util_formatSessionData(data) {
 
     for (var i = 0; i < data.length; ++i) {
 
-        htmlReturn += "<tr>"
+        htmlReturn += `<tr id='${data[i]._id}'>`
         + "<td class='request_startTime'>" + data[i].request_startTime + "</td>"
         + "<td class='request_endTime'>" + data[i].request_endTime + "</td>"
             + "<td class='time_elapsed'>" + data[i].request_totalTimeElapsed + "</td>"
@@ -203,6 +150,7 @@ function util_formatSessionData(data) {
             + "<td class='ad_request_geo'>" + data[i].ad_request_geo + "</td>"
             + "<td class='ad_delivery_status'>" + data[i].ad_delivery_status + "</td>"
             + "<td class='auto_uid'>" + data[i]._id + "</td>"
+            + "<td class='delete_uid'>" + `<button onclick="deleteSessionByUID('${data[i]._id}')">Remove</button>` + "</td>"
             + "</tr>";
 
     }

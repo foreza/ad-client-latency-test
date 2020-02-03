@@ -78,6 +78,22 @@ sessionMetricUtils.listAllValidSessionsForAndroid = () => {
 };
 
 
+
+// [Admin] This utility deletes a single session given the mongo id
+sessionMetricUtils.deleteSessionGivenUID = (uid) => {
+
+  return new Promise((resolve, reject) => {
+    adRequestMetricModel.findByIdAndRemove(uid, function(err, emptiness) {
+      if (err){
+        reject(err);
+      }
+      resolve(emptiness);
+    });
+
+});
+};
+
+
 // [Admin] This utility deletes all known distort sessions in the DB
 sessionMetricUtils.deleteAllSessions = () => {
     return new Promise((resolve, reject) => {

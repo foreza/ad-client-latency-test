@@ -6,16 +6,16 @@ const sessionUtils = require('../../utilities/utils_session');
 router.get('/', (req, res) => {
 
     sessionUtils.listAllSessions().then(sessionList => {
-        if (!sessionList){
+        if (!sessionList) {
             return res.sendStatus(400);
         } else {
             return res.send(sessionList);
         }
     });
-    
+
 });
 
-
+// [REPORTING:] Get all reporting for the specific platform and placement mentioned
 router.get('/metrics/:platform', (req, res, next) => {
 
     let platform = req.params.platform;
@@ -23,9 +23,9 @@ router.get('/metrics/:platform', (req, res, next) => {
     console.log(`Platform is: ${req.params.platform}`)
 
     if (platform != null) {
-       platform = platform.toLowerCase(); 
-    } 
-    
+        platform = platform.toLowerCase();
+    }
+
     switch (platform) {
 
         case "ios":
@@ -45,29 +45,42 @@ router.get('/metrics/:platform', (req, res, next) => {
     next();
 
 }, (req, res, next) => {
-    console.log(`Reached next with ${res.locals.query}`);
 
-        res.locals.query().then(sessionList => {
-            if (!sessionList){
-                return res.sendStatus(400);
-            } else {
-                return res.send(sessionList);
-            }
-       
+    res.locals.query().then(sessionList => {
+        if (!sessionList) {
+            return res.sendStatus(400);
+        } else {
+            return res.send(sessionList);
+        }
+
     })
 });
 
 
-// [Admin] Remove all of the sessions. We'll make this a bit confusing (TODO: properly implement)
+router.delete('/:id', (req, res, next) => {
+
+    sessionUtils.deleteSessionGivenUID(req.params.id).then(emptiness => {
+        if (!emptiness) {
+            return res.sendStatus(400);
+        } else {
+            return res.send(emptiness);
+        }
+    });
+
+
+})
+
+
+// [Admin] Remove all of the sessions.
 router.delete('/admin/delete', (req, res) => {
 
-sessionUtils.deleteAllSessions().then(sessionList => {
-    if (!sessionList){
-        return res.sendStatus(400);
-    } else {
-        return res.send(sessionList);
-    }
-});
+    sessionUtils.deleteAllSessions().then(sessionList => {
+        if (!sessionList) {
+            return res.sendStatus(400);
+        } else {
+            return res.send(sessionList);
+        }
+    });
 
 });
 
