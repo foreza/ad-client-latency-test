@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var path = require('path');
 
 // Connect to Mongo DB
 mongoose.connect('mongodb://localhost/metricsPortal', {useNewUrlParser: true, useUnifiedTopology: true, 'useFindAndModify': false});
@@ -13,6 +14,7 @@ var requestModel = require("./app/models/AdRequestMetric");
 // Configure body parser
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
+
 
 // [CONFIG] Port for server is set here
 var port = process.env.PORT || 8900;
