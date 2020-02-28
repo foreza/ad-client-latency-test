@@ -2,7 +2,6 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var path = require('path');
 
 // Connect to Mongo DB
 mongoose.connect('mongodb://localhost/metricsPortal', {useNewUrlParser: true, useUnifiedTopology: true, 'useFindAndModify': false});
