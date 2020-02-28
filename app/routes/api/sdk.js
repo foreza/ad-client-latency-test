@@ -31,17 +31,12 @@ const infoLogger = (req, res, next) => {
 
 router.post('/', infoLogger, (req, res, next) => {
 
-    // Depending on the mk-ad-slot param, do stuff.
     let mk_ad_slot = req.body["mk-ad-slot"];
-    let mk_version = req.body["mk-version"];
-
+    let mk_version = req.body["mk-version"];        // // pr-SIOS-JTATE-20200121 = iOS
     let platform = "";
+    let pathString = "";
 
     if (mk_ad_slot == "300x250") {
-
-        let pathString = "";
-
-        // pr-SIOS-JTATE-20200121
 
         if (mk_version.indexOf('IOS') > 0){
             pathString = path.join(__dirname + '/mocks/sampleiOSMrec.json')
@@ -50,7 +45,21 @@ router.post('/', infoLogger, (req, res, next) => {
             pathString = path.join(__dirname + '/mocks/sampleAndroidMrec.json')
             platform = "Android";
         }
+
         res.sendFile(pathString);
+
+    } else if (mk_ad_slot == "320x50") {
+        
+        if (mk_version.indexOf('IOS') > 0){
+            const pathString = path.join(__dirname + '/mocks/noFill.json')  // TODO:
+            platform = "iOS";
+        } else {
+            pathString = path.join(__dirname + '/mocks/sampleAndroid320x50.json')
+            platform = "Android";
+        }
+
+        res.sendFile(pathString);
+
     } else {
         const pathString = path.join(__dirname + '/mocks/noFill.json')
         res.sendFile(pathString)
